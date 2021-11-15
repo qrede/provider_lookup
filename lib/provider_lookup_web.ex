@@ -21,6 +21,9 @@ defmodule ProviderLookupWeb do
     quote do
       use Phoenix.Controller, namespace: ProviderLookupWeb
 
+      import Ecto
+      import Ecto.Query
+
       import Plug.Conn
       import ProviderLookupWeb.Gettext
       alias ProviderLookupWeb.Router.Helpers, as: Routes
@@ -87,6 +90,7 @@ defmodule ProviderLookupWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
+      import ProviderLookupWeb.ViewHelpers
       import ProviderLookupWeb.ErrorHelpers
       import ProviderLookupWeb.Gettext
       alias ProviderLookupWeb.Router.Helpers, as: Routes

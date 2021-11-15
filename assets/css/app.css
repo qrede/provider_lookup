@@ -1,8 +1,14 @@
 /* This file is for your main application CSS */
-@import "./phoenix.css";
+
+
+@import "../node_modules/bootstrap/dist/css/bootstrap"; 
+@import "../node_modules/@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4";
+@import "../node_modules/select2/dist/css/select2.min.css";
+
+/*@import "./phoenix.css";*/
 
 /* Alerts and form errors used by phx.new */
-.alert {
+ .alert {
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;
@@ -36,6 +42,7 @@
 }
 
 /* LiveView specific classes for your customization */
+/*
 .phx-no-feedback.invalid-feedback,
 .phx-no-feedback .invalid-feedback {
   display: none;
@@ -86,4 +93,4 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
-}
+} */

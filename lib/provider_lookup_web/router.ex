@@ -18,6 +18,8 @@ defmodule ProviderLookupWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/search", PageController, :search
+    get "/:id", PageController, :show
   end
 
   # Other scopes may use custom stacks.

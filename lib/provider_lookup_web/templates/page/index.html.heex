@@ -1,41 +1,343 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
-</section>
+<div class="container d-flex justify-content-center position-relative align-items-center">
+  <h1 class="display-4 page-header text-center">Medical Provider Lookup</h1>
+</div>
 
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.6/CHANGELOG.md">v1.6 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://web.libera.chat/#elixir">#elixir on Libera Chat (IRC)</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-      <li>
-        <a href="https://discord.gg/elixir">Elixir on Discord</a>
-      </li>
-    </ul>
-  </article>
-</section>
+<div class="d-flex justify-content-center align-items-center position-relative container ">
+  <%= form_for @changeset, Routes.page_path(@conn, :search), [method: :get, as: :filter], fn f -> %>
+    <div class="form-row justify-content-center align-items-center">
+        <div class="form-group col-md-4">
+          <%= label f, :last_name %>
+          <%= search_input f, :last_name, class: "form-control" %>
+        </div>
+        <div class="form-group col-md-4">
+          <%= label f, :first_name %>
+          <%= text_input f, :first_name, class: "form-control" %>
+        </div>
+    </div>
+
+   <div class="form-row justify-content-center align-items-center">
+      <div class="form-group col-md-4">
+        <%= label f, :city %>
+        <%= text_input f, :city, class: "form-control" %>
+      </div>
+      <div class="form-group col-md-2">
+        <%= label f, :state %>
+        <%= select(f, :state, [
+          "Any": "", 
+          "Alabama": "AL",
+          "Alaska": "AK",
+          "Arizona": "AZ",
+          "Arkansas": "AR",
+          "California": "CA",
+          "Colorado": "CO",
+          "Connecticut": "CT",
+          "Delaware": "DE",
+          "District Of Columbia": "DC",
+          "Florida": "FL",
+          "Georgia": "GA",
+          "Hawaii": "HI",
+          "Idaho": "ID",
+          "Illinois": "IL",
+          "Indiana": "IN",
+          "Iowa": "IA",
+          "Kansas": "KS",
+          "Kentucky": "KY",
+          "Louisiana": "LA",
+          "Maine": "ME",
+          "Maryland": "MD",
+          "Massachusetts": "MA",
+          "Michigan": "MI",
+          "Minnesota": "MN",
+          "Mississippi": "MS",
+          "Missouri": "MO",
+          "Montana": "MT",
+          "Nebraska": "NE",
+          "Nevada": "NV",
+          "New Hampshire": "NH",
+          "New Jersey": "NJ",
+          "New Mexico": "NM",
+          "New York": "NY",
+          "North Carolina": "NC",
+          "North Dakota": "ND",
+          "Ohio": "OH",
+          "Oklahoma": "OK",
+          "Oregon": "OR",
+          "Pennsylvania": "PA",
+          "Rhode Island": "RI",
+          "South Carolina": "SC",
+          "South Dakota": "SD",
+          "Tennessee": "TN",
+          "Texas": "TX",
+          "Utah": "UT",
+          "Vermont": "VT",
+          "Virginia": "VA",
+          "Washington": "WA",
+          "West Virginia": "WV",
+          "Wisconsin": "WI",
+          "Wyoming": "WY"
+          ], class: "form-control") %>
+      </div>
+      <div class="form-group col-md-2">
+        <%= label f, :zip %>
+        <%= text_input f, :zip, class: "form-control" %>
+      </div>
+    </div>
+
+      <div id="desc" class="row justify-content-center align-items-center">
+          <div class="form-group col-md-8">
+            <%= label f, :description %>
+         <%= select(f, :description, [
+                  "Any": "", 
+                  "Acupuncturist": "Acupuncturist",
+                  "Adult Companion": "Adult Companion",
+                  "Advanced Practice Dental Therapist": "Advanced Practice Dental Therapist",
+                  "Advanced Practice Midwife": "Advanced Practice Midwife",
+                  "Allergy & Immunology": "Allergy & Immunology",
+                  "Alzheimer Center (Dementia Center)": "Alzheimer Center (Dementia Center)",
+                  "Ambulance": "Ambulance",
+                  "Anaplastologist": "Anaplastologist",
+                  "Anesthesiologist Assistant": "Anesthesiologist Assistant",
+                  "Anesthesiology": "Anesthesiology",
+                  "Art Therapist": "Art Therapist",
+                  "Assistant Behavior Analyst": "Assistant Behavior Analyst",
+                  "Assistant, Podiatric": "Assistant, Podiatric",
+                  "Assisted Living Facility": "Assisted Living Facility",
+                  "Audiologist": "Audiologist",
+                  "Audiologist-Hearing Aid Fitter": "Audiologist-Hearing Aid Fitter",
+                  "Behavior Analyst": "Behavior Analyst",
+                  "Behavior Technician": "Behavior Technician",
+                  "Blood Bank": "Blood Bank",
+                  "Bus": "Bus",
+                  "Case Management": "Case Management",
+                  "Case Manager/Care Coordinator": "Case Manager/Care Coordinator",
+                  "Chiropractor": "Chiropractor",
+                  "Chore Provider": "Chore Provider",
+                  "Chronic Disease Hospital": "Chronic Disease Hospital",
+                  "Clinic/Center": "Clinic/Center",
+                  "Clinical Ethicist": "Clinical Ethicist",
+                  "Clinical Exercise Physiologist": "Clinical Exercise Physiologist",
+                  "Clinical Medical Laboratory": "Clinical Medical Laboratory",
+                  "Clinical Neuropsychologist<": "Clinical Neuropsychologist",
+                  "Clinical Nurse Specialist": "Clinical Nurse Specialist",
+                  "Clinical Pharmacology": "Clinical Pharmacology",
+                  "Colon & Rectal Surgery": "Colon & Rectal Surgery",
+                  "Community Based Residential Treatment Facility, Intellectual and/or Developmental Disabilities": "Community Based Residential Treatment Facility, Intellectual and/or Developmental Disabilities",
+                  "Community Based Residential Treatment Facility, Mental Illness": "Community Based Residential Treatment Facility, Mental Illness",
+                  "Community Health Worker": "Community Health Worker",
+                  "Community/Behavioral Health": "Community/Behavioral Health",
+                  "Contractor": "Contractor",
+                  "Counselor": "Counselor",
+                  "Custodial Care Facility": "Custodial Care Facility",
+                  "Dance Therapist": "Dance Therapist",
+                  "Day Training, Developmentally Disabled Services": "Day Training, Developmentally Disabled Services",
+                  "Day Training/Habilitation Specialist": "Day Training/Habilitation Specialist",
+                  "Dental Assistant": "Dental Assistant",
+                  "Dental Hygienist": "Dental Hygienist",
+                  "Dental Laboratory": "Dental Laboratory",
+                  "Dental Laboratory Technician": "Dental Laboratory Technician",
+                  "Dental Therapist": "Dental Therapist",
+                  "Dentist": "Dentist",
+                  "Denturist": "Denturist",
+                  "Department of Veterans Affairs (VA) Pharmacy<": "Department of Veterans Affairs (VA) Pharmacy",
+                  "Dermatology": "Dermatology",
+                  "Developmental Therapist": "Developmental Therapist",
+                  "Dietary Manager": "Dietary Manager",
+                  "Dietetic Technician, Registered": "Dietetic Technician, Registered",
+                  "Dietitian, Registered": "Dietitian, Registered",
+                  "Doula": "Doula",
+                  "Driver": "Driver",
+                  "Durable Medical Equipment & Medical Supplies": "Durable Medical Equipment & Medical Supplies",
+                  "Early Intervention Provider Agency": "Early Intervention Provider Agency",
+                  "Electrodiagnostic Medicine": "Electrodiagnostic Medicine",
+                  "Emergency Medical Technician, Basic": "Emergency Medical Technician, Basic",
+                  "Emergency Medical Technician, Intermediate": "Emergency Medical Technician, Intermediate",
+                  "Emergency Medical Technician, Paramedic": "Emergency Medical Technician, Paramedic",
+                  "Emergency Medicine": "Emergency Medicine",
+                  "Emergency Response System Companies": "Emergency Response System Companies",
+                  "Epilepsy Unit": "Epilepsy Unit",
+                  "Exclusive Provider Organization": "Exclusive Provider Organization",
+                  "Eyewear Supplier": "Eyewear Supplier",
+                  "Family Medicine": "Family Medicine",
+                  "Foster Care Agency": "Foster Care Agency",
+                  "Funeral Director": "Funeral Director",
+                  "General Acute Care Hospital": "General Acute Care Hospital",
+                  "General Practice": "General Practice",
+                  "Genetic Counselor, MS": "Genetic Counselor, MS",
+                  "Health Educator": "Health Educator",
+                  "Health Maintenance Organization": "Health Maintenance Organization", 
+                  "Hearing Aid Equipment": "Hearing Aid Equipment",
+                  "Hearing Instrument Specialist": "Hearing Instrument Specialist",    
+                  "Home Delivered Meals": "Home Delivered Meals",
+                  "Home Health": "Home Health",
+                  "Home Health Aide": "Home Health Aide",
+                  "Home Infusion": "Home Infusion",
+                  "Homemaker": "Homemaker",
+                  "Homeopath": "Homeopath",
+                  "Hospice Care, Community Based": "Hospice Care, Community Based",
+                  "Hospice, Inpatient": "Hospice, Inpatient",
+                  "Hospitalist": "Hospitalist",
+                  "In Home Supportive Care": "In Home Supportive Care",
+                  "Independent Medical Examiner": "Independent Medical Examiner",                     
+                  "Intermediate Care Facility, Mental Illness": "Intermediate Care Facility, Mental Illness",
+                  "Intermediate Care Facility, Mentally Retarded": "Intermediate Care Facility, Mentally Retarded",
+                  "Internal Medicine": "Internal Medicine",
+                  "Interpreter": "Interpreter",
+                  "Kinesiotherapist": "Kinesiotherapist",
+                  "Lactation Consultant, Non-RN": "Lactation Consultant, Non-RN",
+                  "Legal Medicine": "Legal Medicine",
+                  "Licensed Practical Nurse": "Licensed Practical Nurse",
+                  "Licensed Psychiatric Technician": "Licensed Psychiatric Technician",
+                  "Licensed Vocational Nurse": "Licensed Vocational Nurse",
+                  "Local Education Agency (LEA)": "Local Education Agency (LEA)",
+                  "Lodging": "Lodging",
+                  "Long Term Care Hospital": "Long Term Care Hospital",
+                  "Marriage & Family Therapist": "Marriage & Family Therapist",
+                  "Massage Therapist": "Massage Therapist",
+                  "Mastectomy Fitter": "Mastectomy Fitter",
+                  "Meals": "Meals",
+                  "Mechanotherapist": "Mechanotherapist",
+                  "Medical Foods Supplier": "Medical Foods Supplier",
+                  "Medical Genetics": "Medical Genetics",
+                  "Medical Genetics, Ph.D. Medical Genetics": "Medical Genetics, Ph.D. Medical Genetics",
+                  "Medicare Defined Swing Bed Unit": "Medicare Defined Swing Bed Unit",
+                  "Midwife": "Midwife",
+                  "Midwife, Lay": "Midwife, Lay",
+                  "Military Clinical Medical Laboratory": "Military Clinical Medical Laboratory",
+                  "Military Health Care Provider": "Military Health Care Provider",
+                  "Military Hospital": "Military Hospital",
+                  "Military/U.S. Coast Guard Pharmacy": "Military/U.S. Coast Guard Pharmacy",
+                  "Military/U.S. Coast Guard Transport": "Military/U.S. Coast Guard Transport",
+                  "Multi-Specialty": "Multi-Specialty",
+                  "Music Therapist": "Music Therapist",
+                  "Naprapath": "Naprapath",
+                  "Naturopath": "Naturopath",
+                  "Neurological Surgery": "Neurological Surgery",
+                  "Neuromusculoskeletal Medicine & OMM": "Neuromusculoskeletal Medicine & OMM",
+                  "Neuromusculoskeletal Medicine, Sports Medicine": "Neuromusculoskeletal Medicine, Sports Medicine",
+                  "Non-Pharmacy Dispensing Site": "Non-Pharmacy Dispensing Site",
+                  "Non-emergency Medical Transport (VAN)": "Non-emergency Medical Transport (VAN)",
+                  "Nuclear Medicine": "Nuclear Medicine",
+                  "Nurse Anesthetist, Certified Registered": "Nurse Anesthetist, Certified Registered",
+                  "Nurse Practitioner": "Nurse Practitioner",
+                  "Nurse's Aide": "Nurse's Aide",
+                  "Nursing Care": "Nursing Care",
+                  "Nursing Facility/Intermediate Care Facility": "Nursing Facility/Intermediate Care Facility",
+                  "Nursing Home Administrator": "Nursing Home Administrator",
+                  "Nutritionist": "Nutritionist",
+                  "Obstetrics & Gynecology": "Obstetrics & Gynecology",
+                  "Occupational Therapist": "Occupational Therapist",
+                  "Occupational Therapy Assistant": "Occupational Therapy Assistant",
+                  "Ophthalmology": "Ophthalmology",
+                  "Optometrist": "Optometrist",
+                  "Oral & Maxillofacial Surgery": "Oral & Maxillofacial Surgery",
+                  "Oral Medicinist": "Oral Medicinist",
+                  "Orthopaedic Surgery": "Orthopaedic Surgery",
+                  "Orthotic Fitter": "Orthotic Fitter",
+                  "Orthotist": "Orthotist",
+                  "Otolaryngology": "Otolaryngology",
+                  "Pain Medicine": "Pain Medicine",
+                  "Pathology": "Pathology",
+                  "Pediatrics": "Pediatrics",
+                  "Pedorthist": "Pedorthist",
+                  "Peer Specialist": "Peer Specialist",
+                  "Perfusionist": "Perfusionist",
+                  "Personal Emergency Response Attendant": "Personal Emergency Response Attendant",
+                  "Pharmacist": "Pharmacist",
+                  "Pharmacy": "Pharmacy",
+                  "Pharmacy Technician": "Pharmacy Technician",
+                  "Phlebology": "Phlebology",
+                  "Physical Medicine & Rehabilitation": "Physical Medicine & Rehabilitation",
+                  "Physical Therapist": "Physical Therapist",
+                  "Physical Therapy Assistant": "Physical Therapy Assistant",
+                  "Physician Assistant": "Physician Assistant",
+                  "Physiological Laboratory": "Physiological Laboratory",
+                  "Plastic Surgery": "Plastic Surgery",
+                  "Podiatrist": "Podiatrist",
+                  "Poetry Therapist": "Poetry Therapist",
+                  "Point of Service": "Point of Service",
+                  "Portable X-ray and/or Other Portable Diagnostic Imaging Supplier": "Portable X-ray and/or Other Portable Diagnostic Imaging Supplier",
+                  "Preferred Provider Organization": "Preferred Provider Organization",
+                  "Prevention Professional": "Prevention Professional",
+                  "Preventive Medicine": "Preventive Medicine",
+                  "Private Vehicle": "Private Vehicle",
+                  "Program of All-Inclusive Care for the Elderly (PACE) Provider Organization": "Program of All-Inclusive Care for the Elderly (PACE) Provider Organization",
+                  "Prosthetic/Orthotic Supplier": "Prosthetic/Orthotic Supplier",
+                  "Prosthetist": "Prosthetist",
+                  "Psychiatric Hospital": "Psychiatric Hospital",
+                  "Psychiatric Residential Treatment Facility": "Psychiatric Residential Treatment Facility",
+                  "Psychiatric Unit": "Psychiatric Unit",
+                  "Psychiatry & Neurology": "Psychiatry & Neurology",
+                  "Psychoanalyst": "Psychoanalyst",
+                  "Psychologist": "Psychologist",
+                  "Public Health or Welfare": "Public Health or Welfare",
+                  "Pulmonary Function Technologist": "Pulmonary Function Technologist",
+                  "Radiologic Technologist": "Radiologic Technologist",
+                  "Radiology": "Radiology",
+                  "Radiology Practitioner Assistant": "Radiology Practitioner Assistant",
+                  "Recreation Therapist": "Recreation Therapist",
+                  "Recreational Therapist Assistant": "Recreational Therapist Assistant",
+                  "Reflexologist": "Reflexologist",
+                  "Registered Nurse": "Registered Nurse",
+                  "Rehabilitation Counselor": "Rehabilitation Counselor",
+                  "Rehabilitation Hospital": "Rehabilitation Hospital",
+                  "Rehabilitation Practitioner": "Rehabilitation Practitioner",
+                  "Rehabilitation Unit": "Rehabilitation Unit",
+                  "Rehabilitation, Substance Use Disorder Unit": "Rehabilitation, Substance Use Disorder Unit",
+                  "Religious Nonmedical Health Care Institution": "Religious Nonmedical Health Care Institution",
+                  "Religious Nonmedical Nursing Personnel": "Religious Nonmedical Nursing Personnel",
+                  "Religious Nonmedical Practitioner": "Religious Nonmedical Practitioner",
+                  "Residential Treatment Facility, Emotionally Disturbed Children": "Residential Treatment Facility, Emotionally Disturbed Children",
+                  "Residential Treatment Facility, Intellectual and/or Developmental Disabilities": "Residential Treatment Facility, Intellectual and/or Developmental Disabilities",
+                  "Residential Treatment Facility, Physical Disabilities": "Residential Treatment Facility, Physical Disabilities",
+                  "Respiratory Therapist, Certified": "Respiratory Therapist, Certified",
+                  "Respiratory Therapist, Registered": "Respiratory Therapist, Registered",
+                  "Respite Care": "Respite Care",
+                  "Secured Medical Transport (VAN)": "Secured Medical Transport (VAN)",
+                  "Single Specialty": "Single Specialty",
+                  "Skilled Nursing Facility": "Skilled Nursing Facility",
+                  "Sleep Specialist, PhD": "Sleep Specialist, PhD",
+                  "Social Worker<": "Social Worker<",
+                  "Special Hospital": "Special Hospital",
+                  "Specialist": "Specialist",
+                  "Specialist/Technologist": "Specialist/Technologist",
+                  "Specialist/Technologist Cardiovascular": "Specialist/Technologist Cardiovascular",
+                  "Specialist/Technologist, Health Information": "Specialist/Technologist, Health Information",
+                  "Specialist/Technologist, Other": "Specialist/Technologist, Other",
+                  "Specialist/Technologist, Pathology": "Specialist/Technologist, Pathology",
+                  "Speech-Language Pathologist": "Speech-Language Pathologist",
+                  "Student in an Organized Health Care Education/Training Program": "Student in an Organized Health Care Education/Training Program",
+                  "Substance Abuse Rehabilitation Facility": "Substance Abuse Rehabilitation Facility",
+                  "Supports Brokerage": "Supports Brokerage",
+                  "Surgery": "Surgery",
+                  "Taxi": "Taxi",
+                  "Technician": "Technician",
+                  "Technician, Cardiology": "Technician, Cardiology",
+                  "Technician, Health Information": "Technician, Health Information",
+                  "Technician, Other": "Technician, Other",
+                  "Technician, Pathology": "Technician, Pathology",
+                  "Technician/Technologist": "Technician/Technologist",
+                  "Thoracic Surgery (Cardiothoracic Vascular Surgery)": "Thoracic Surgery (Cardiothoracic Vascular Surgery)",
+                  "Train": "Train",
+                  "Transplant Surgery": "Transplant Surgery",
+                  "Transportation Broker": "Transportation Broker",
+                  "Urology": "Urology",
+                  "Veterinarian": "Veterinarian",
+                  "Voluntary or Charitable": "Voluntary or Charitable"
+                  ], class: "form-control select2") %>
+                <script>
+                $(function () {
+                    $('.select2').select2({
+                      theme: 'bootstrap4',
+                      width: '100%',
+                    });
+                })
+              </script>
+          </div>
+        </div>
+
+        <div class="row d-flex justify-content-center align-items-center">
+            <input type="submit" class="btn btn-primary center" value="Search">
+        </div>
+
+  <% end %>
+</div>
