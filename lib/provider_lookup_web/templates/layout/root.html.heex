@@ -7,7 +7,6 @@
     <%= csrf_meta_tag() %>
     <%= live_title_tag assigns[:page_title] || "Medical Provider Lookup" %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
-    <!-- <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script> -->
     <script type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script> 
     <%# <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script> %>
   </head>
