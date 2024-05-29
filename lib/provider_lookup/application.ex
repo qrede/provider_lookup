@@ -8,16 +8,16 @@ defmodule ProviderLookup.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      ProviderLookup.Repo,
-      # Start the Telemetry supervisor
       ProviderLookupWeb.Telemetry,
-      # Start the PubSub system
+      ProviderLookup.Repo,
+      {DNSCluster, query: Application.get_env(:provider_lookup, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: ProviderLookup.PubSub},
-      # Start the Endpoint (http/https)
-      ProviderLookupWeb.Endpoint
+      # Start the Finch HTTP client for sending emails
+      {Finch, name: ProviderLookup.Finch},
       # Start a worker by calling: ProviderLookup.Worker.start_link(arg)
       # {ProviderLookup.Worker, arg}
+      # Start to serve requests, typically the last entry
+      ProviderLookupWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

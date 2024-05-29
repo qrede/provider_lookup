@@ -4,8 +4,9 @@ import Config
 config :provider_lookup, ProviderLookup.Repo,
   username: "postgres",
   password: "postgres",
-  database: "provider_lookup_dev",
   hostname: "localhost",
+  database: "provider_lookup_dev",
+  stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10,
   timeout: 2_000_000
@@ -14,8 +15,8 @@ config :provider_lookup, ProviderLookup.Repo,
 # debugging and code reloading.
 #
 # The watchers configuration can be used to run external
-# watchers to your application. For example, we use it
-# with esbuild to bundle .js and .css sources.
+# watchers to your application. For example, we can use it
+# to bundle .js and .css sources.
 config :provider_lookup, ProviderLookupWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
@@ -25,8 +26,8 @@ config :provider_lookup, ProviderLookupWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "Sx5iBBfDZK5llCvNNAp6TA68g6C/gMYy1CqVpX4GTV62iakkSHIEAUJCFw1UP2LV",
   watchers: [
-    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:sample_app, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:sample_app, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -37,7 +38,6 @@ config :provider_lookup, ProviderLookupWeb.Endpoint,
 #
 #     mix phx.gen.cert
 #
-# Note that this task requires Erlang/OTP 20 or later.
 # Run `mix help phx.gen.cert` for more information.
 #
 # The `http:` config above can be replaced with:
@@ -57,12 +57,14 @@ config :provider_lookup, ProviderLookupWeb.Endpoint,
 config :provider_lookup, ProviderLookupWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/provider_lookup_web/(live|views)/.*(ex)$",
-      ~r"lib/provider_lookup_web/templates/.*(eex)$"
+      ~r"lib/provider_lookup_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
+
+# Enable dev routes for dashboard and mailbox
+config :provider_lookup, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
@@ -73,3 +75,12 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :phoenix_live_view,
+  # Include HEEx debug annotations as HTML comments in rendered markup
+  debug_heex_annotations: true,
+  # Enable helpful, but potentially expensive runtime checks
+  enable_expensive_runtime_checks: true
+
+# Disable swoosh api client as it is only required for production adapters.
+config :swoosh, :api_client, false

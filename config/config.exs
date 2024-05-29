@@ -8,12 +8,17 @@
 import Config
 
 config :provider_lookup,
-  ecto_repos: [ProviderLookup.Repo]
+  ecto_repos: [ProviderLookup.Repo],
+  generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
 config :provider_lookup, ProviderLookupWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: ProviderLookupWeb.ErrorView, accepts: ~w(html json), layout: false],
+  adapter: Bandit.PhoenixAdapter,
+  render_errors: [
+    formats: [html: ProviderLookupWeb.ErrorHTML, json: ProviderLookupWeb.ErrorJSON],
+    layout: false
+  ],
   pubsub_server: ProviderLookup.PubSub,
   live_view: [signing_salt: "U4kYuUia"]
 
@@ -31,11 +36,24 @@ config :swoosh, :api_client, false
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.12.18",
-  default: [
-    args: ~w(js/app.js --bundle --target=es2016 --outdir=../priv/static/assets),
+  version: "0.17.11",
+  sample_app: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configure tailwind (the version is required)
+config :tailwind,
+  version: "3.4.0",
+  sample_app: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configures Elixir's Logger
@@ -45,11 +63,6 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
-
-config :scrivener_html,
-  routes_helper: ProviderLookupWeb.Router.Helpers,
-  # If you use a single view style everywhere, you can configure it here. See View Styles below for more info.
-  view_style: :bootstrap_v4
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

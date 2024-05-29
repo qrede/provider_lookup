@@ -98,8 +98,8 @@ defmodule Mix.Tasks.ProviderLookup.Pull do
     else
       # create the file if doesn't exist
       File.mkdir_p!(Path.dirname(path))
-      File.write!(path, '')
-      ''
+      File.write!(path, ~c"")
+      ~c""
     end
   end
 

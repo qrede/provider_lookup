@@ -19,21 +19,20 @@ defmodule ProviderLookupWeb.ConnCase do
 
   using do
     quote do
+      # The default endpoint for testing
+      @endpoint ProviderLookupWeb.Endpoint
+
+      use ProviderLookupWeb, :verified_routes
+
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
       import ProviderLookupWeb.ConnCase
-
-      alias ProviderLookupWeb.Router.Helpers, as: Routes
-
-      # The default endpoint for testing
-      @endpoint ProviderLookupWeb.Endpoint
     end
   end
 
   setup tags do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(ProviderLookup.Repo, shared: not tags[:async])
-    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
+    ProviderLookup.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

@@ -4,10 +4,9 @@ defmodule ProviderLookup.MixProject do
   def project do
     [
       app: :provider_lookup,
-      version: "0.1.0",
-      elixir: "~> 1.12",
+      version: "0.1.1",
+      elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -33,30 +32,40 @@ defmodule ProviderLookup.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.0"},
+      {:phoenix, "~> 1.7.12"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.6"},
+      {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 3.0"},
+      {:phoenix_html, "~> 4.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.16.0"},
+      {:phoenix_live_view, "~> 0.20.2"},
       {:floki, ">= 0.30.0"},
-      {:phoenix_live_dashboard, "~> 0.5"},
-      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
-      {:swoosh, "~> 1.3"},
-      {:telemetry_metrics, "~> 0.6"},
+      {:phoenix_live_dashboard, "~> 0.8.3"},
+      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
+      {:heroicons,
+       github: "tailwindlabs/heroicons",
+       tag: "v2.1.1",
+       sparse: "optimized",
+       app: false,
+       compile: false,
+       depth: 1},
+      {:swoosh, "~> 1.5"},
+      {:finch, "~> 0.13"},
+      {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.18"},
+      {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
-      {:httpoison, "~> 1.8"},
-      {:nimble_csv, "~> 1.1"},
-      {:timex, "~> 3.0"},
-      {:flow, "~> 1.1"},
-      {:unzip, "~> 0.6.0"},
-      {:scrivener_ecto, "~> 2.0"},
-      {:scrivener_html, github: "qrede/scrivener_html"},
-      {:ex_phone_number, "~> 0.2"}
+      {:dns_cluster, "~> 0.1.1"},
+      {:bandit, "~> 1.2"},
+      {:httpoison, "~> 2.2"},
+      {:nimble_csv, "~> 1.2"},
+      {:timex, "~> 3.7"},
+      {:flow, "~> 1.2"},
+      {:unzip, "~> 0.11.0"},
+      {:scrivener_ecto, "~> 2.7"},
+      {:ex_phone_number, "~> 0.4.4"},
+      {:phoenix_html_helpers, "~> 1.0"}
     ]
   end
 
@@ -68,13 +77,15 @@ defmodule ProviderLookup.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup"],
+      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
+      "assets.build": ["tailwind sample_app", "esbuild sample_app"],
       "assets.deploy": [
-        "cmd --cd assets npm run deploy",
-        "esbuild default --minify",
+        "tailwind sample_app --minify",
+        "esbuild sample_app --minify",
         "phx.digest"
       ]
     ]

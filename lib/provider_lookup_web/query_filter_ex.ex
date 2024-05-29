@@ -1,4 +1,5 @@
 defmodule ProviderLookupWeb.QueryFilterEx do
+  @moduledoc false
   import Ecto.Query
 
   defp make_filter_keys(filters) do
@@ -102,15 +103,19 @@ defmodule ProviderLookupWeb.QueryFilterEx do
       [binding, name] = val |> String.split("__") |> Enum.map(&String.to_atom/1)
       qs |> order_by([{^binding, t}], [{^ord, field(t, ^name)}])
     else
-      qs
+      default_sort(qs)
     end
   end
 
   def sort_by_params(qs, %{"order_by" => "-" <> val}, allowed),
-    do: do_sort_by_params(qs, val, :asc, allowed)
-
-  def sort_by_params(qs, %{"order_by" => val}, allowed),
     do: do_sort_by_params(qs, val, :desc, allowed)
 
-  def sort_by_params(qs, _, _), do: qs
+  def sort_by_params(qs, %{"order_by" => val}, allowed),
+    do: do_sort_by_params(qs, val, :asc, allowed)
+
+  def sort_by_params(qs, _, _), do: default_sort(qs)
+
+  defp default_sort(qs) do
+    qs |> order_by([{:core_npi, t}], [{:asc, field(t, :id)}])
+  end
 end

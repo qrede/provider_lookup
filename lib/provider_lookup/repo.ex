@@ -3,5 +3,5 @@ defmodule ProviderLookup.Repo do
     otp_app: :provider_lookup,
     adapter: Ecto.Adapters.Postgres
 
-  use Scrivener, page_size: 50
+  use Scrivener, page_size: 10
 end

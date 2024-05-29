@@ -7,10 +7,13 @@ defmodule ProviderLookupWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_provider_lookup_key",
-    signing_salt: "eydhfh8B"
+    signing_salt: "eydhfh8B",
+    same_site: "Lax"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [connect_info: [session: @session_options]],
+    longpoll: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -20,7 +23,7 @@ defmodule ProviderLookupWeb.Endpoint do
     at: "/",
     from: :provider_lookup,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    only: ProviderLookupWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
