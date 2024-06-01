@@ -115,9 +115,9 @@ defmodule ProviderLookupWeb.CoreComponents do
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
       role="alert"
       class={[
-        "fixed top-2 right-2 mr-2 w-80 sm:w-96 z-50 rounded-lg p-3 ring-1",
-        @kind == :info && "bg-emerald-50 text-emerald-800 ring-emerald-500 fill-cyan-900",
-        @kind == :error && "bg-rose-50 text-rose-900 shadow-md ring-rose-500 fill-rose-900"
+        "fixed top-2 right-2 z-50 mr-2 w-80 rounded-lg p-3 ring-1 sm:w-96",
+        @kind == :info && "bg-emerald-50 fill-cyan-900 text-emerald-800 ring-emerald-500",
+        @kind == :error && "bg-rose-50 fill-rose-900 text-rose-900 shadow-md ring-rose-500"
       ]}
       {@rest}
     >
@@ -231,7 +231,7 @@ defmodule ProviderLookupWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3",
+        "rounded-lg bg-zinc-900 px-3 py-2 hover:bg-zinc-700 phx-submit-loading:opacity-75",
         "text-sm font-semibold leading-6 text-white active:text-white/80",
         @class
       ]}
@@ -335,7 +335,7 @@ defmodule ProviderLookupWeb.CoreComponents do
       <select
         id={@id}
         name={@name}
-        class="mt-2 block w-full rounded-md border border-gray-300  bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
+        class="mt-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
         multiple={@multiple}
         {@rest}
       >
@@ -477,9 +477,9 @@ defmodule ProviderLookupWeb.CoreComponents do
     ~H"""
     <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
       <table class="w-[40rem] mt-11 sm:w-full">
-        <thead class="text-sm text-left leading-6 text-zinc-500">
+        <thead class="text-left text-sm leading-6 text-zinc-500">
           <tr>
-            <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal"><%= col[:label] %></th>
+            <th :for={col <- @col} class="p-0 pr-6 pb-4 font-normal"><%= col[:label] %></th>
             <th :if={@action != []} class="relative p-0 pb-4">
               <span class="sr-only"><%= gettext("Actions") %></span>
             </th>
@@ -685,11 +685,8 @@ defmodule ProviderLookupWeb.CoreComponents do
   def pagination(assigns) do
     ~H"""
     <div class="flex flex-col gap-2.5">
-      <div class={[
-        "flex px-2 items-center justify-between",
-        @class
-      ]}>
-        <div class="flex-1 text-sm text-zinc-600/50">
+      <div class={["flex items-center justify-between px-2", @class]}>
+        <div class="text-zinc-600/50 flex-1 text-sm">
           Row <%= (@page_number - 1) * @page_size + 1 %> - <%= min(
             @page_number * @page_size,
             @total_entries
@@ -702,7 +699,7 @@ defmodule ProviderLookupWeb.CoreComponents do
 
           <div class="flex items-center space-x-2">
             <button
-              class="hidden p-0  border-input items-center justify-center font-medium  rounded-md gap-1 text-sm w-8 h-8 focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-1 lg:flex disabled:pointer-events-none disabled:opacity-50 hover:bg-zinc-100 hover:text-zinc-900 border btn phx-submit-loading:opacity-75 shadow-sm"
+              class="border-input btn hidden h-8 w-8 items-center justify-center gap-1 rounded-md border p-0 text-sm font-medium shadow-sm hover:bg-zinc-100 hover:text-zinc-900 focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 phx-submit-loading:opacity-75 lg:flex"
               disabled={@page_number == 1}
               phx-click={@on_click_fn.(1, @page_size)}
             >
@@ -710,7 +707,7 @@ defmodule ProviderLookupWeb.CoreComponents do
               <.icon name="hero-chevron-double-left" class="h-4 w-4" />
             </button>
             <button
-              class="hidden p-0  border-input items-center justify-center font-medium  rounded-md gap-1 text-sm w-8 h-8 focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-1 lg:flex disabled:pointer-events-none disabled:opacity-50 hover:bg-zinc-100 hover:text-zinc-900 border btn phx-submit-loading:opacity-75 shadow-sm"
+              class="border-input btn hidden h-8 w-8 items-center justify-center gap-1 rounded-md border p-0 text-sm font-medium shadow-sm hover:bg-zinc-100 hover:text-zinc-900 focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 phx-submit-loading:opacity-75 lg:flex"
               disabled={@page_number == 1}
               phx-click={@on_click_fn.(@page_number - 1, @page_size)}
             >
@@ -718,7 +715,7 @@ defmodule ProviderLookupWeb.CoreComponents do
               <.icon name="hero-chevron-left" class="h-4 w-4" />
             </button>
             <button
-              class="hidden p-0  border-input items-center justify-center font-medium  rounded-md gap-1 text-sm w-8 h-8 focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-1 lg:flex disabled:pointer-events-none disabled:opacity-50 hover:bg-zinc-100 hover:text-zinc-900 border btn phx-submit-loading:opacity-75 shadow-sm"
+              class="border-input btn hidden h-8 w-8 items-center justify-center gap-1 rounded-md border p-0 text-sm font-medium shadow-sm hover:bg-zinc-100 hover:text-zinc-900 focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 phx-submit-loading:opacity-75 lg:flex"
               disabled={@page_number == @total_pages}
               phx-click={@on_click_fn.(@page_number + 1, @page_size)}
             >
@@ -726,7 +723,7 @@ defmodule ProviderLookupWeb.CoreComponents do
               <.icon name="hero-chevron-right" class="h-4 w-4" />
             </button>
             <button
-              class="hidden p-0  border-input items-center justify-center font-medium  rounded-md gap-1 text-sm w-8 h-8 focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-1 lg:flex disabled:pointer-events-none disabled:opacity-50 hover:bg-zinc-100 hover:text-zinc-900 border btn phx-submit-loading:opacity-75 shadow-sm"
+              class="border-input btn hidden h-8 w-8 items-center justify-center gap-1 rounded-md border p-0 text-sm font-medium shadow-sm hover:bg-zinc-100 hover:text-zinc-900 focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 phx-submit-loading:opacity-75 lg:flex"
               disabled={@page_number == @total_pages}
               phx-click={@on_click_fn.(@total_pages, @page_size)}
             >

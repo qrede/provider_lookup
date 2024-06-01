@@ -65,7 +65,8 @@ defmodule ProviderLookup.MixProject do
       {:unzip, "~> 0.11.0"},
       {:scrivener_ecto, "~> 2.7"},
       {:ex_phone_number, "~> 0.4.4"},
-      {:phoenix_html_helpers, "~> 1.0"}
+      {:phoenix_html_helpers, "~> 1.0"},
+      {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false}
     ]
   end
 

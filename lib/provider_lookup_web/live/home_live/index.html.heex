@@ -36,7 +36,7 @@
       <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-zinc-200 hover:bg-zinc-50">
-            <th class="text-zinc-500 h-10 px-2 text-left align-middle font-medium">
+            <th class="h-10 px-2 text-left align-middle font-medium text-zinc-500">
               <div class="flex items-center space-x-2">
                 <button
                   class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md px-3 text-xs font-medium hover:bg-zinc-200 hover:text-gray-600"
@@ -107,7 +107,7 @@
                 </button>
               </div>
             </th>
-            <th class="text-zinc-500 h-10 px-2 text-left align-middle font-medium">
+            <th class="h-10 px-2 text-left align-middle font-medium text-zinc-500">
               <div class="flex items-center space-x-2">
                 <button
                   class="-ml-3 inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md px-3 text-xs font-medium hover:bg-zinc-200 hover:text-gray-600"
@@ -178,7 +178,7 @@
                 </button>
               </div>
             </th>
-            <th class="text-zinc-500 h-10 px-2 text-left align-middle font-medium">
+            <th class="h-10 px-2 text-left align-middle font-medium text-zinc-500">
               <div class="flex items-center space-x-2">
                 <button
                   class="-ml-3 inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md px-3 text-xs font-medium hover:bg-zinc-200 hover:text-gray-600"
@@ -249,10 +249,10 @@
                 </button>
               </div>
             </th>
-            <th class="text-zinc-500 h-10 px-2 text-left align-middle font-medium">
+            <th class="h-10 px-2 text-left align-middle font-medium text-zinc-500">
               <span>Phone</span>
             </th>
-            <th class="text-zinc-500 h-10 px-2 text-left align-middle font-medium">
+            <th class="h-10 px-2 text-left align-middle font-medium text-zinc-500">
               <span>Primary Address</span>
             </th>
           </tr>
@@ -261,7 +261,7 @@
           <%= if Enum.any?(@results) do %>
             <%= for result <- @results do %>
               <tr
-                class="border-b  hover:bg-zinc-50 cursor-pointer"
+                class="cursor-pointer border-b hover:bg-zinc-50"
                 phx-click={JS.push("detail", value: %{id: result.id})}
               >
                 <td class="p-2 align-middle">
@@ -285,7 +285,7 @@
             <% end %>
           <% else %>
             <tr class="border-b hover:bg-zinc-50">
-              <td class="p-2 align-middle h-24 text-center" colspan="5">
+              <td class="h-24 p-2 text-center align-middle" colspan="5">
                 No results.
               </td>
             </tr>
