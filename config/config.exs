@@ -46,7 +46,7 @@ config :esbuild,
 
 # Configure tailwind (the version is required)
 config :tailwind,
-  version: "3.4.0",
+  version: "3.4.3",
   sample_app: [
     args: ~w(
       --config=tailwind.config.js
