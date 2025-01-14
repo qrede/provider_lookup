@@ -5,19 +5,19 @@ defmodule ProviderLookup.Parser do
 
   require Logger
 
-  def parse_decimal(decimal_string) do
-    case Decimal.parse(decimal_string) do
-      :error ->
-        Logger.debug(fn ->
-          "[ProviderLookup] bad decimal value: [#{decimal_string}]"
-        end)
+  # def parse_decimal(decimal_string) do
+  #   case Decimal.parse(decimal_string) do
+  #     :error ->
+  #       Logger.debug(fn ->
+  #         "[ProviderLookup] bad decimal value: [#{decimal_string}]"
+  #       end)
 
-        Decimal.new(0)
+  #       Decimal.new(0)
 
-      {:ok, decimal} ->
-        decimal
-    end
-  end
+  #     {:ok, decimal} ->
+  #       decimal
+  #   end
+  # end
 
   def parse_integer(integer_string) do
     case Integer.parse(integer_string) do

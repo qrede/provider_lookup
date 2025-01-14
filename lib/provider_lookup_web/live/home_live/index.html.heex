@@ -265,20 +265,20 @@
                 phx-click={JS.push("detail", value: %{id: result.id})}
               >
                 <td class="p-2 align-middle">
-                  <div class=""><%= result.last_name %></div>
+                  <div class="">{result.last_name}</div>
                 </td>
                 <td class="p-2 align-middle">
-                  <div><%= result.first_name %></div>
+                  <div>{result.first_name}</div>
                 </td>
                 <td class="p-2 align-middle">
-                  <div><%= result.description %></div>
+                  <div>{result.description}</div>
                 </td>
                 <td class="p-2 align-middle">
-                  <div class=""><%= replace_phone(result.phone) %></div>
+                  <div class="">{replace_phone(result.phone)}</div>
                 </td>
                 <td class="p-2 align-middle">
                   <div class="">
-                    <%= result.addr_first %><br /><%= result.city %>, <%= result.state %> <%= result.zip %>
+                    {result.addr_first}<br />{result.city}, {result.state} {result.zip}
                   </div>
                 </td>
               </tr>

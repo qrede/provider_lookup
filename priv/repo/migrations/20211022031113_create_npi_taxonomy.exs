@@ -3,7 +3,6 @@ defmodule ProviderLookup.Repo.Migrations.CreateNpiTaxonomy do
 
   def change do
     create table(:npi_taxonomy, primary_key: false) do
-      # add :tax_id, :integer, primary_key: true, autogenerate: true
       add :tax_id, :serial, primary_key: true
       add :taxonomy_group, :string
       add :taxonomy_classification, :string

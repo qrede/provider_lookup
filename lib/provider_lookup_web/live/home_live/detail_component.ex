@@ -10,12 +10,12 @@ defmodule ProviderLookupWeb.HomeLive.DetailComponent do
     <div class="container space-y-4 text-center">
       <%= if @npi && @core_npi do %>
         <h2 class="text-5xl font-semibold leading-10 text-zinc-800">
-          <%= @core_npi.first_name %> <%= @core_npi.last_name %>
+          {@core_npi.first_name} {@core_npi.last_name}
         </h2>
-        <h3 class="text-zinc-900/80 mt-2 text-3xl leading-6"><%= @core_npi.description %></h3>
-        <h5 class="text-lg font-bold leading-5"><%= @core_npi.phone |> replace_phone %></h5>
+        <h3 class="text-zinc-900/80 mt-2 text-3xl leading-6">{@core_npi.description}</h3>
+        <h5 class="text-lg font-bold leading-5">{@core_npi.phone |> replace_phone}</h5>
         <h5 class="text-lg font-bold leading-5">
-          <%= @core_npi.addr_first %>, <%= @core_npi.city %>, <%= @core_npi.state %>, <%= @core_npi.zip %>
+          {@core_npi.addr_first}, {@core_npi.city}, {@core_npi.state}, {@core_npi.zip}
         </h5>
         <iframe
           width="600"

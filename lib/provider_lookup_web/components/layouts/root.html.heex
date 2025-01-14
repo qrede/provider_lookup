@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="csrf-token" content={get_csrf_token()} />
     <link rel="icon" type="image/x-icon" href={~p"/favicon.ico"} />
-    <.live_title>
-      <%= assigns[:page_title] || "Medical Provider Lookup" %>
+    <.live_title default="Medical Provider Lookup">
+      {assigns[:page_title]}
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
@@ -17,7 +17,7 @@
     <div class="relative flex min-h-screen flex-col">
       <._header {assigns} />
       <main class="flex-1">
-        <%= @inner_content %>
+        {@inner_content}
       </main>
     </div>
   </body>

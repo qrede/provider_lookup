@@ -43,9 +43,9 @@ defmodule ProviderLookupWeb do
         formats: [:html, :json],
         layouts: [html: ProviderLookupWeb.Layouts]
 
-      # import ProviderLookupWeb.ViewHelpers
+      use Gettext, backend: ProviderLookupWeb.Gettext
+
       import Plug.Conn
-      import ProviderLookupWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -83,11 +83,13 @@ defmodule ProviderLookupWeb do
 
   defp html_helpers do
     quote do
+      # Translation
+      use Gettext, backend: ProviderLookupWeb.Gettext
+
       # HTML escaping functionality
       import Phoenix.HTML
-      # Core UI components and translation
+      # Core UI components
       import ProviderLookupWeb.CoreComponents
-      import ProviderLookupWeb.Gettext
       import ProviderLookupWeb.ViewHelpers
 
       # Shortcut for generating JS commands

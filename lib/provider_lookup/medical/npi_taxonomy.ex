@@ -8,10 +8,7 @@ defmodule ProviderLookup.Medical.NpiTaxonomy do
   @primary_key {:tax_id, :id, autogenerate: true}
   @derive {Phoenix.Param, key: :tax_id}
 
-  # @foreign_key_type :binary_id
-
   schema "npi_taxonomy" do
-    # field :tax_id, :integer
     field :license_num, :string
     field :license_state, :string
     field :taxonomy_classification, :string
